@@ -51,6 +51,7 @@ const Summary = () => {
       });
       removeAll();
       reset();
+      setSelectedDeliveryType({ value: undefined, label: undefined });
       toast.success("Commande Envoyée");
     } catch (err) {
       toast.error("Erreur !");
@@ -171,8 +172,8 @@ const Summary = () => {
                 }),
               }}
               options={[
-                { value: 0, label: "A domicile" },
-                { value: 1, label: "Stop desk" },
+                { value: 1, label: "A domicile" },
+                { value: 2, label: "Stop desk" },
               ]}
             />
           </div>
