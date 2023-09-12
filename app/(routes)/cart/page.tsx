@@ -1,6 +1,5 @@
 "use client";
 import Container from "@/components/ui/Container";
-import NoResult from "@/components/ui/noResult";
 import useCart from "@/hooks/useCart";
 import { useState, useEffect } from "react";
 import CartItem from "./components/CartItem";

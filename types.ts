@@ -18,6 +18,9 @@ export interface Product {
   category: Category;
   images: Image[];
 }
+export interface OrderItem extends Product {
+  quantity: number;
+}
 export interface Color {
   id: string;
   name: string;

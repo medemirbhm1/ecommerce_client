@@ -1,14 +1,15 @@
 import { create } from "zustand";
-import { Product } from "@/types";
-import { data } from "autoprefixer";
+import { OrderItem, Product } from "@/types";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { toast } from "react-hot-toast";
 
 interface CartStore {
-  items: Product[];
+  items: OrderItem[];
   addItem: (data: Product) => void;
   removeItem: (id: string) => void;
   removeAll: () => void;
+  increaseQunatity: (id: string) => void;
+  decreaseQunatity: (id: string) => void;
 }
 
 const useCart = create(
@@ -21,7 +22,7 @@ const useCart = create(
         if (existingItem) {
           return toast("Item already in cart.");
         }
-        set({ items: [...currentItems, data] });
+        set({ items: [...currentItems, { ...data, quantity: 1 }] });
         toast.success("Item added to cart.");
       },
       removeItem: (id: string) => {
@@ -30,6 +31,22 @@ const useCart = create(
       },
       removeAll: () => {
         set({ items: [] });
+      },
+      increaseQunatity: (id: string) => {
+        const currentItems = get().items;
+        const existingItem = currentItems.find((item) => item.id === id);
+        if (existingItem) {
+          existingItem.quantity += 1;
+          set({ items: [...currentItems] });
+        }
+      },
+      decreaseQunatity: (id: string) => {
+        const currentItems = get().items;
+        const existingItem = currentItems.find((item) => item.id === id);
+        if (existingItem) {
+          existingItem.quantity -= 1;
+          set({ items: [...currentItems] });
+        }
       },
     }),
     {

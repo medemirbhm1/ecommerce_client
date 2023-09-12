@@ -1,6 +1,6 @@
 "use client";
 
-import { Product } from "@/types";
+import {  Product } from "@/types";
 import Image from "next/image";
 import React, { MouseEventHandler } from "react";
 import IconButton from "./IconButton";
@@ -14,7 +14,6 @@ interface ProductCardProps {
   data: Product;
 }
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
-  
   const router = useRouter();
   const previewModal = usePreviewModal();
   const cart = useCart();

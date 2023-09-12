@@ -32,7 +32,7 @@ const Summary = () => {
     label: string | undefined;
   }>({ value: undefined, label: undefined });
   const totaPrice = items.reduce(
-    (total, item) => total + Number(item.price),
+    (total, item) => total + Number(item.price) * item.quantity,
     0
   );
   const {
@@ -47,7 +47,7 @@ const Summary = () => {
       await axios.post(url, {
         ...data,
         deliveryType: selectedDeliveryType.value,
-        itemsIds: items.map((item) => item.id),
+        items: items.map(({ id, quantity }) => ({ id, quantity })),
       });
       removeAll();
       reset();
