@@ -14,8 +14,9 @@ import { toast } from "react-hot-toast";
 const url = `${process.env.NEXT_PUBLIC_API_URL}/orders`;
 
 const OrderSchema = z.object({
-  name: z.string().min(2).max(20),
-  email: z.string().email(),
+  firstname: z.string().min(2).max(20),
+  lastname: z.string().min(2).max(20),
+  email: z.string().optional(),
   phone: z.string().min(8).max(13),
   address: z.string().min(2).max(40),
   wilaya: z.string(),
@@ -46,6 +47,7 @@ const Summary = () => {
     try {
       await axios.post(url, {
         ...data,
+        email: data.email || "",
         deliveryType: selectedDeliveryType.value,
         items: items.map(({ id, quantity }) => ({ id, quantity })),
       });
@@ -71,11 +73,11 @@ const Summary = () => {
               className="focus:outline-none focus:border-gray-600 py-2 px-2 border rounded w-full"
               required
               placeholder="Nom"
-              {...register("name")}
+              {...register("lastname")}
             />
-            {errors.name && (
+            {errors.lastname && (
               <span className="text-red-500 text-sm">
-                {errors.name.message}
+                {errors.lastname.message}
               </span>
             )}
           </div>
@@ -83,6 +85,18 @@ const Summary = () => {
             <input
               className="focus:outline-none focus:border-gray-600 py-2 px-2 border rounded w-full"
               required
+              placeholder="Prénom"
+              {...register("firstname")}
+            />
+            {errors.firstname && (
+              <span className="text-red-500 text-sm">
+                {errors.firstname.message}
+              </span>
+            )}
+          </div>
+          <div className="mb-4">
+            <input
+              className="focus:outline-none focus:border-gray-600 py-2 px-2 border rounded w-full"
               placeholder="Email"
               {...register("email")}
             />
