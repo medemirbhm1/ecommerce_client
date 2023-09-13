@@ -1,13 +1,17 @@
-"use client"
+"use client";
 import { Product } from "@/types";
 import Currency from "./ui/Currency";
 import Button from "./ui/Button";
-import { ShoppingCartIcon } from "lucide-react";
+import { DollarSign, ShoppingCartIcon } from "lucide-react";
+import useCart from "@/hooks/useCart";
+import { useRouter } from "next/navigation";
 
 interface InfoProps {
   data: Product;
 }
 const Info: React.FC<InfoProps> = ({ data }) => {
+  const cart = useCart();
+  const router = useRouter();
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
@@ -30,10 +34,25 @@ const Info: React.FC<InfoProps> = ({ data }) => {
           />
         </div>
       </div>
-      <div className="mt-10 flex items-center gap-x-3">
-        <Button className="flex items-center gap-x-2">
-          Add to cart
-          <ShoppingCartIcon  />
+      <div className="mt-10 flex items-center flex-wrap gap-x-3">
+        <Button
+          onClick={() => {
+            cart.addItem(data);
+          }}
+          className="flex items-center gap-x-2"
+        >
+          Ajouter au panier
+          <ShoppingCartIcon />
+        </Button>
+        <Button
+          onClick={() => {
+            cart.addItem(data);
+            router.push("/cart");
+          }}
+          className="flex items-center gap-x-2"
+        >
+          Acheter
+          <DollarSign />
         </Button>
       </div>
     </div>
