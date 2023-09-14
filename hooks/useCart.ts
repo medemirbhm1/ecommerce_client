@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 
 interface CartStore {
   items: OrderItem[];
-  addItem: (data: Product) => void;
+  addItem: (data: Product, source?: string) => void;
   removeItem: (id: string) => void;
   removeAll: () => void;
   increaseQunatity: (id: string) => void;
@@ -16,18 +16,21 @@ const useCart = create(
   persist<CartStore>(
     (set, get) => ({
       items: [],
-      addItem: (data: Product) => {
+      addItem: (data: Product, source?: string) => {
         const currentItems = get().items;
         const existingItem = currentItems.find((item) => item.id === data.id);
         if (existingItem) {
-          return toast("Item already in cart.");
+          if (source !== "BUY_NOW") {
+            return toast("Le produit existe déjà dans le panier");
+          }
+          return;
         }
         set({ items: [...currentItems, { ...data, quantity: 1 }] });
-        toast.success("Item added to cart.");
+        toast.success("Produit ajouté au panier");
       },
       removeItem: (id: string) => {
         set({ items: [...get().items.filter((item) => item.id !== id)] });
-        toast.success("Item removed from cart.");
+        toast.success("Produit supprimé du panier");
       },
       removeAll: () => {
         set({ items: [] });

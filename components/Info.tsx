@@ -23,36 +23,36 @@ const Info: React.FC<InfoProps> = ({ data }) => {
       <hr className="my-4" />
       <div className="flex flex-col gap-y-6">
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Size:</h3>
+          <h3 className="font-semibold text-black">Taille:</h3>
           <div>{data.size.name}</div>
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Color:</h3>
+          <h3 className="font-semibold text-black">Couleur:</h3>
           <div
             className="h-6 w-6  rounded-full border border-gray-600"
             style={{ backgroundColor: data?.color?.value }}
           />
         </div>
       </div>
-      <div className="mt-10 flex items-center flex-wrap gap-x-3">
+      <div className="mt-10 flex items-center flex-wrap gap-3">
         <Button
           onClick={() => {
-            cart.addItem(data);
-          }}
-          className="flex items-center gap-x-2"
-        >
-          Ajouter au panier
-          <ShoppingCartIcon />
-        </Button>
-        <Button
-          onClick={() => {
-            cart.addItem(data);
+            cart.addItem(data, "BUY_NOW");
             router.push("/cart");
           }}
           className="flex items-center gap-x-2"
         >
-          Acheter
+          Acheter maintenant
           <DollarSign />
+        </Button>
+        <Button
+          onClick={() => {
+            cart.addItem(data);
+          }}
+          className="flex items-center gap-x-2 bg-transparent text-black border border-black"
+        >
+          Ajouter au panier
+          <ShoppingCartIcon />
         </Button>
       </div>
     </div>
